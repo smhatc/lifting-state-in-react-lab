@@ -1,6 +1,11 @@
 // src/App.jsx
 
+import { useState } from 'react';
+import './components/IngredientList.jsx'
+import './components/BurgerStack.jsx'
 import './App.css';
+import IngredientList from './components/IngredientList.jsx';
+import BurgerStack from './components/BurgerStack.jsx';
 
 export const availableIngredients = [
   { name: 'Kaiser Bun', color: 'saddlebrown' },
@@ -20,11 +25,22 @@ export const availableIngredients = [
 ];
 
 const App = () => {
+  const [stack, setStack] = useState([]);
+
+  const addToBurger = (ingredientToAdd) => {
+    setStack([...stack, ingredientToAdd]);
+  }
+
+  const removeFromBurger = (ingredientToRemoveIndex) => {
+    setStack(stack.filter((ingredient, index) => index !== ingredientToRemoveIndex));
+  }
+
   return (
     <main>
       <h1>Burger Stacker</h1>
       <section>
-      {/* List & Stack components */}
+        <IngredientList ingredients={availableIngredients} addToBurger={addToBurger} />
+        <BurgerStack stack={stack} removeFromBurger={removeFromBurger}/>
       </section>
     </main>
   );
